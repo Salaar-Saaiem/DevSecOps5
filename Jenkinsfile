@@ -15,22 +15,25 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/Salaar-Saaiem/maven-ci-demo.git'
+                // ✅ Correct repo
+                git 'https://github.com/Salaar-Saaiem/DevSecOps5.git'
             }
         }
 
         stage('Build WAR') {
             steps {
+                // ✅ Build the WAR package
                 bat 'mvn clean package'
             }
         }
 
         stage('Deploy to Tomcat') {
             steps {
+                // ✅ Updated WAR filename and context path
                 bat '''
                 curl -u %TOMCAT_USER%:%TOMCAT_PASS% ^
-                -T target\\maven-ci-demo.war ^
-                "%TOMCAT_URL%/manager/text/deploy?path=/maven-ci-demo&update=true"
+                -T target\\DevSecOps5.war ^
+                "%TOMCAT_URL%/manager/text/deploy?path=/DevSecOps5&update=true"
                 '''
             }
         }
